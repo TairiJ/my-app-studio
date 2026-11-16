@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel – At The Helm</title>
+  <link rel="stylesheet" href="/static/brand/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a class="nav-brand" href="/">⚓ At The Helm</a>
+    <div class="nav-links">
+      <span class="role-badge role-admin">admin</span>
+      <a href="/dashboard" class="btn-ghost">← Dashboard</a>
+      <button class="btn-ghost" id="logout-btn">Log out</button>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+    <div class="dash-header">
+      <h1>⚙️ Admin Panel</h1>
+      <p class="dash-sub">Server-enforced: only <strong>admin</strong> role can reach this page.</p>
+    </div>
+
+    <div class="admin-section">
+      <h2>All Users ({{ users | length }})</h2>
+      <table class="user-table">
+        <thead>
+          <tr><th>Username</th><th>Display name</th><th>Role</th><th>Joined</th></tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td><code>{{ u.username }}</code></td>
+            <td>{{ u.display_name or '—' }}</td>
+            <td><span class="role-badge role-{{ u.role }}">{{ u.role }}</span></td>
+            <td>{{ u.created_at.strftime('%Y-%m-%d') if u.created_at else '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-section">
+      <h2>Role Management CLI</h2>
+      <p>Use the trusted local CLI to promote or demote users:</p>
+      <pre><code># List all users
+python -m app.cli list-users
+
+# Promote a user to admin
+python -m app.cli promote &lt;username&gt; admin
+
+# Demote back to member
+python -m app.cli promote &lt;username&gt; member</code></pre>
+    </div>
+  </main>
+
+  <script>
+    const token = localStorage.getItem('helm_token');
+    if (!token) window.location.href = '/auth/login-page';
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('helm_token');
+      localStorage.removeItem('helm_user');
+      window.location.href = '/';
+    });
+  </script>
+</body>
+</html>

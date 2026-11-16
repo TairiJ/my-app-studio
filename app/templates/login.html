@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In – At The Helm</title>
+  <link rel="stylesheet" href="/static/brand/style.css" />
+</head>
+<body class="auth-page">
+  <nav class="navbar">
+    <a class="nav-brand" href="/">⚓ At The Helm</a>
+  </nav>
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2>Welcome back, Pilot</h2>
+      <p class="auth-sub">Log in to your cockpit.</p>
+
+      <div id="error-msg" class="error-banner" style="display:none"></div>
+
+      <form id="login-form">
+        <label>Username
+          <input type="text" name="username" required placeholder="your-username" />
+        </label>
+        <label>Password
+          <input type="password" name="password" required placeholder="••••••••" />
+        </label>
+        <button type="submit" class="btn-primary btn-block">Log in</button>
+      </form>
+      <p class="auth-footer">No account? <a href="/auth/signup-page">Sign up</a></p>
+    </div>
+  </main>
+
+  <script>
+    // If already logged in redirect to dashboard
+    if (localStorage.getItem('helm_token')) window.location.href = '/dashboard';
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const errorEl = document.getElementById('error-msg');
+      errorEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: form.username.value.trim(), password: form.password.value }),
+        });
+        const data = await res.json();
+        if (!res.ok) { errorEl.textContent = data.detail || 'Login failed.'; errorEl.style.display='block'; return; }
+        localStorage.setItem('helm_token', data.token);
+        localStorage.setItem('helm_user', JSON.stringify(data.user));
+        window.location.href = '/dashboard';
+      } catch (err) {
+        errorEl.textContent = 'Network error – try again.'; errorEl.style.display='block';
+      }
+    });
+  </script>
+</body>
+</html>

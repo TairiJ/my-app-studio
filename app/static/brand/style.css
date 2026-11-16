@@ -1,0 +1,205 @@
+/* At The Helm – App Studio Brand CSS */
+/* Dark cockpit theme, mirroring the existing At The Helm React UI */
+
+:root {
+  --bg:        #0a0e1a;
+  --surface:   #111827;
+  --surface2:  #1f2937;
+  --border:    #2d3748;
+  --accent:    #3b82f6;
+  --accent-h:  #2563eb;
+  --text:      #f1f5f9;
+  --muted:     #94a3b8;
+  --success:   #10b981;
+  --warn:      #f59e0b;
+  --danger:    #ef4444;
+  --radius:    0.75rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+code, pre {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.875rem;
+  background: var(--surface2);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  color: #93c5fd;
+}
+
+pre { padding: 1rem; overflow-x: auto; border-left: 3px solid var(--accent); }
+
+/* ── Navbar ─────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 56px;
+  background: rgba(10,14,26,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand {
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--text); letter-spacing: -0.02em;
+}
+.nav-links { display: flex; align-items: center; gap: 1rem; }
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius);
+  padding: 0.5rem 1.25rem;
+  font-weight: 600; font-size: 0.9rem;
+  cursor: pointer; transition: background 0.15s;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--accent-h); text-decoration: none; }
+.btn-primary.btn-lg { padding: 0.75rem 2rem; font-size: 1rem; }
+.btn-primary.btn-block { width: 100%; justify-content: center; margin-top: 0.5rem; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 0.45rem 1.1rem;
+  font-size: 0.9rem; cursor: pointer; transition: all 0.15s;
+  text-decoration: none;
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--muted); text-decoration: none; }
+.btn-ghost.btn-lg { padding: 0.75rem 2rem; font-size: 1rem; }
+
+/* ── Hero (homepage) ────────────────────────────────────── */
+.hero {
+  display: flex; align-items: center; justify-content: center;
+  min-height: calc(100vh - 56px - 200px);
+  padding: 4rem 2rem;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 20%, rgba(59,130,246,0.12) 0%, transparent 65%);
+}
+.hero-content { max-width: 680px; }
+.badge {
+  display: inline-block;
+  background: rgba(59,130,246,0.15);
+  color: var(--accent);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 999px;
+  padding: 0.3rem 1rem;
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+  margin-bottom: 1.25rem; text-transform: uppercase;
+}
+.hero h1 { font-size: clamp(2.5rem,6vw,4rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
+.tagline { font-size: 1.15rem; color: var(--muted); margin-bottom: 0.75rem; }
+.promise { font-size: 1rem; color: var(--muted); margin-bottom: 2.5rem; }
+.cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── Feature cards (homepage) ───────────────────────────── */
+.features {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem; max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem;
+}
+.feature-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.feature-card:hover { border-color: var(--accent); }
+.feature-card .icon { font-size: 2rem; }
+.feature-card h3 { margin: 0.75rem 0 0.4rem; font-size: 1rem; }
+.feature-card p { color: var(--muted); font-size: 0.875rem; }
+
+/* ── Auth pages ─────────────────────────────────────────── */
+.auth-page { display: flex; flex-direction: column; }
+.auth-container {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.auth-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 2.5rem 2rem;
+  width: 100%; max-width: 400px;
+}
+.auth-card h2 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.auth-sub { color: var(--muted); margin-bottom: 1.75rem; font-size: 0.9rem; }
+.auth-footer { text-align: center; color: var(--muted); font-size: 0.875rem; margin-top: 1.5rem; }
+
+label {
+  display: block; font-size: 0.85rem; font-weight: 500;
+  color: var(--muted); margin-bottom: 1rem;
+}
+label input {
+  display: block; width: 100%;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 0.5rem; color: var(--text);
+  padding: 0.6rem 0.75rem; margin-top: 0.3rem;
+  font-size: 0.95rem; transition: border-color 0.15s;
+}
+label input:focus { outline: none; border-color: var(--accent); }
+
+.error-banner {
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.4);
+  color: #fca5a5; border-radius: 0.5rem;
+  padding: 0.65rem 0.9rem; font-size: 0.875rem; margin-bottom: 1rem;
+}
+
+/* ── Dashboard ──────────────────────────────────────────── */
+.dashboard { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
+.dash-header { margin-bottom: 2rem; }
+.dash-header h1 { font-size: 1.75rem; }
+.dash-sub { color: var(--muted); margin-top: 0.4rem; }
+
+.dash-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.dash-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem;
+}
+.dash-card h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+.big-role { font-size: 2rem; font-weight: 700; }
+
+.info-list { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 1rem; font-size: 0.875rem; }
+.info-list dt { color: var(--muted); }
+.info-list dd { color: var(--text); }
+
+/* ── Role badges ────────────────────────────────────────── */
+.role-badge {
+  display: inline-block; padding: 0.2rem 0.65rem;
+  border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.role-admin   { background: rgba(239,68,68,0.15);  color: #f87171;  border: 1px solid rgba(239,68,68,0.3); }
+.role-member  { background: rgba(16,185,129,0.15); color: #34d399;  border: 1px solid rgba(16,185,129,0.3); }
+.role-anonymous { background: rgba(148,163,184,0.15); color: var(--muted); border: 1px solid var(--border); }
+
+/* ── Admin panel ────────────────────────────────────────── */
+.admin-section { margin-bottom: 2.5rem; }
+.admin-section h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.user-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.user-table th {
+  text-align: left; padding: 0.65rem 1rem;
+  background: var(--surface2); color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.user-table td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); }
+.user-table tr:last-child td { border-bottom: none; }
+.user-table tr:hover td { background: var(--surface2); }
+
+/* ── Footer ─────────────────────────────────────────────── */
+.footer {
+  text-align: center; padding: 1.5rem; color: var(--muted);
+  font-size: 0.8rem; border-top: 1px solid var(--border);
+}

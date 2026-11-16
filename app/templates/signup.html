@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up – At The Helm</title>
+  <link rel="stylesheet" href="/static/brand/style.css" />
+</head>
+<body class="auth-page">
+  <nav class="navbar">
+    <a class="nav-brand" href="/">⚓ At The Helm</a>
+  </nav>
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2>Create an account</h2>
+      <p class="auth-sub">Join the cockpit.</p>
+
+      <div id="error-msg" class="error-banner" style="display:none"></div>
+
+      <form id="signup-form">
+        <label>Username
+          <input type="text" name="username" required minlength="3" placeholder="at-least-3-chars" />
+        </label>
+        <label>Display name (optional)
+          <input type="text" name="display_name" placeholder="Tizz" />
+        </label>
+        <label>Password
+          <input type="password" name="password" required minlength="6" placeholder="6+ characters" />
+        </label>
+        <button type="submit" class="btn-primary btn-block">Create account</button>
+      </form>
+      <p class="auth-footer">Already have an account? <a href="/auth/login-page">Log in</a></p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const errorEl = document.getElementById('error-msg');
+      errorEl.style.display = 'none';
+
+      const payload = {
+        username: form.username.value.trim(),
+        password: form.password.value,
+        display_name: form.display_name.value.trim() || null,
+      };
+
+      try {
+        const res = await fetch('/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!res.ok) { errorEl.textContent = data.detail || 'Sign-up failed.'; errorEl.style.display='block'; return; }
+        localStorage.setItem('helm_token', data.token);
+        localStorage.setItem('helm_user', JSON.stringify(data.user));
+        window.location.href = '/dashboard';
+      } catch (err) {
+        errorEl.textContent = 'Network error – try again.'; errorEl.style.display='block';
+      }
+    });
+  </script>
+</body>
+</html>

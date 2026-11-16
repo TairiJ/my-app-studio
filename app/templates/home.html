@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ brand.name }}</title>
+  <link rel="stylesheet" href="/static/brand/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <span class="nav-brand">⚓ {{ brand.name }}</span>
+    <div class="nav-links">
+      <a href="/auth/login-page">Login</a>
+      <a href="/auth/signup-page" class="btn-primary">Sign Up</a>
+    </div>
+  </nav>
+
+  <main class="hero">
+    <div class="hero-content">
+      <div class="badge">{{ brand.archetype }}</div>
+      <h1>{{ brand.name }}</h1>
+      <p class="tagline">{{ brand.tagline }}</p>
+      <p class="promise">{{ brand.promise }}</p>
+      <div class="cta-group">
+        <a href="/auth/signup-page" class="btn-primary btn-lg">Get Started →</a>
+        <a href="/auth/login-page" class="btn-ghost btn-lg">Log In</a>
+      </div>
+    </div>
+  </main>
+
+  <section class="features">
+    <div class="feature-card">
+      <span class="icon">🛡️</span>
+      <h3>Role-Based Access</h3>
+      <p>Members and admins — server-enforced at every route.</p>
+    </div>
+    <div class="feature-card">
+      <span class="icon">🔐</span>
+      <h3>Secure Auth</h3>
+      <p>JWT tokens, bcrypt passwords. The same stack that powers At The Helm.</p>
+    </div>
+    <div class="feature-card">
+      <span class="icon">⚡</span>
+      <h3>FastAPI Speed</h3>
+      <p>Async Python backend with automatic OpenAPI docs at <code>/docs</code>.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>⚓ {{ brand.name }} &mdash; IS373 App Studio &mdash; Built with FastAPI</p>
+  </footer>
+</body>
+</html>

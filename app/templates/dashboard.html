@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – At The Helm</title>
+  <link rel="stylesheet" href="/static/brand/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a class="nav-brand" href="/">⚓ At The Helm</a>
+    <div class="nav-links">
+      <span class="role-badge role-{{ user.role }}">{{ user.role }}</span>
+      {% if user.role == 'admin' %}
+        <a href="/admin" class="btn-ghost">Admin Panel</a>
+      {% endif %}
+      <button class="btn-ghost" id="logout-btn">Log out</button>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+    <div class="dash-header">
+      <h1>Welcome back, <strong>{{ user.display_name or user.username }}</strong> 👋</h1>
+      <p class="dash-sub">You are logged in as <code>{{ user.username }}</code> with role <strong>{{ user.role }}</strong>.</p>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-card">
+        <h3>🛡️ Your Role</h3>
+        <p class="big-role role-{{ user.role }}">{{ user.role }}</p>
+        {% if user.role == 'member' %}
+          <p>Members can access their personal dashboard. Contact an admin to upgrade your role.</p>
+        {% elif user.role == 'admin' %}
+          <p>Admins have full access, including the <a href="/admin">Admin Panel</a> to manage users.</p>
+        {% endif %}
+      </div>
+
+      <div class="dash-card">
+        <h3>⚙️ Account Info</h3>
+        <dl class="info-list">
+          <dt>Username</dt><dd>{{ user.username }}</dd>
+          <dt>Display name</dt><dd>{{ user.display_name or '—' }}</dd>
+          <dt>Role</dt><dd>{{ user.role }}</dd>
+        </dl>
+      </div>
+
+      <div class="dash-card">
+        <h3>⚓ At The Helm</h3>
+        <p>This app is the IS373 App Studio implementation — built on the At The Helm brand, powered by FastAPI.</p>
+        <a href="/docs" class="btn-ghost" target="_blank">View API docs →</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Guard — if no token, redirect to login
+    const token = localStorage.getItem('helm_token');
+    if (!token) window.location.href = '/auth/login-page';
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('helm_token');
+      localStorage.removeItem('helm_user');
+      window.location.href = '/';
+    });
+  </script>
+</body>
+</html>
